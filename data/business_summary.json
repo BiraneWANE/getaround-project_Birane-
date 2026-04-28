@@ -1,0 +1,74 @@
+{
+  "dataset": {
+    "all_rentals": 21310,
+    "cars": 8143,
+    "ended_rentals": 18045,
+    "canceled_rentals": 3265,
+    "linked_rentals": 1841,
+    "linked_rentals_share": 0.08639136555607696
+  },
+  "checkout_behavior": {
+    "known_checkout_delays": 16345,
+    "late_gt_0_share": 0.5753441419394311,
+    "late_gt_15_share": 0.453716732945855,
+    "late_gt_60_share": 0.2683389415723463,
+    "median_delay_min": 9.0,
+    "p90_delay_min": 193.0
+  },
+  "checkout_behavior_by_checkin_type": {
+    "connect": {
+      "count": 3402,
+      "median_delay_min": -9.0,
+      "late_gt_0_share": 0.4288653733098178,
+      "late_gt_15_share": 0.3262786596119929,
+      "late_gt_60_share": 0.16255144032921812
+    },
+    "mobile": {
+      "count": 12943,
+      "median_delay_min": 14.0,
+      "late_gt_0_share": 0.6138453217955652,
+      "late_gt_15_share": 0.48721316541760024,
+      "late_gt_60_share": 0.2961446341651858
+    }
+  },
+  "operational_risk": {
+    "problematic_cases": 218,
+    "problematic_share_of_linked_rentals": 0.11841390548614883,
+    "problematic_share_of_all_rentals": 0.01022993899577663,
+    "median_overlap_when_problematic_min": 0.0
+  },
+  "operational_risk_by_checkin_type": {
+    "connect": {
+      "linked_rentals": 813,
+      "problematic_cases": 69,
+      "problematic_share": 0.08487084870848709
+    },
+    "mobile": {
+      "linked_rentals": 1028,
+      "problematic_cases": 149,
+      "problematic_share": 0.14494163424124515
+    }
+  },
+  "recommendation": {
+    "scope": "all",
+    "threshold_min": 120,
+    "affected_rentals": 666,
+    "affected_share_of_scope": 0.3617599130907116,
+    "affected_share_of_all_rentals": 0.031252932895354295,
+    "solved_problematic_cases": 180,
+    "solved_share_of_scope_problematic_cases": 0.8256880733944955,
+    "solved_share_of_all_problematic_cases": 0.8256880733944955,
+    "efficiency_solved_per_affected": 0.2702702702702703
+  },
+  "conservative_fallback": {
+    "scope": "connect",
+    "threshold_min": 120,
+    "affected_rentals": 295,
+    "affected_share_of_scope": 0.3628536285362854,
+    "affected_share_of_all_rentals": 0.013843266072266542,
+    "solved_problematic_cases": 59,
+    "solved_share_of_scope_problematic_cases": 0.855072463768116,
+    "solved_share_of_all_problematic_cases": 0.2706422018348624,
+    "efficiency_solved_per_affected": 0.2
+  }
+}
