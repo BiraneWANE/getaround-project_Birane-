@@ -220,4 +220,4 @@ Ce projet traite dans un même dépôt une question produit et une question de m
 
 L'analyse des retards conduit à une recommandation claire : **imposer 120 minutes de délai minimal sur l'ensemble du parc**. Le volet API montre ensuite comment transformer un modèle de prédiction en service exploitable.
 
-
+L'ensemble reste volontairement sobre, lisible et directement publiable sur GitHub.
