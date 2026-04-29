@@ -117,13 +117,7 @@ Repères utiles sur les données de retards :
 
 ```text
 .
-├── app.py
-├── Dockerfile.dashboard
-├── Makefile
-├── MLproject
-├── README.md
-├── requirements.txt
-├── .gitignore
+├── .streamlit/
 ├── api/
 │   ├── app.py
 │   ├── Dockerfile
@@ -131,13 +125,19 @@ Repères utiles sur les données de retards :
 │   └── sample_payload_list.json
 ├── assets/
 ├── data/
-├── docs/
 ├── models/
 ├── notebooks/
 │   ├── getaround_analysis_executed.ipynb
 │   └── getaround_analysis_clean.ipynb
 ├── src/
-└── tests/
+├── tests/
+├── .gitignore
+├── app.py
+├── Dockerfile.dashboard
+├── Makefile
+├── MLproject
+├── README.md
+└── requirements.txt
 ```
 
 ## Technologies utilisées
