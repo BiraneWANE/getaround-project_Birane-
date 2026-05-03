@@ -46,7 +46,7 @@ Déterminer une règle de délai minimal pertinente pour réduire les conflits e
 - construire un tableau de bord Streamlit lisible et orienté décision ;
 - comparer plusieurs approches pour la prédiction du prix journalier ;
 - exposer le modèle retenu via une API FastAPI ;
-- proposer une structure de dépôt claire, exécutable localement et déployable.
+- proposer une structure de dépôt claire, exécutable localement, publiable sur GitHub et déployable.
 
 ### Livrables produits
 
@@ -54,7 +54,6 @@ Déterminer une règle de délai minimal pertinente pour réduire les conflits e
 - une API FastAPI : `api/app.py` ;
 - deux notebooks : une version exécutée et une version clean ;
 - des scripts d'analyse et d'entraînement ;
-- des documents d'accompagnement dans `docs/`.
 
 ## Données utilisées
 
@@ -93,7 +92,6 @@ Repères utiles sur les données de retards :
 - tableau de bord Streamlit pour la lecture métier ;
 - API documentée automatiquement via `/docs` ;
 - scripts reproductibles ;
-- documentation complémentaire dans `docs/`.
 
 ## Résultats clés
 
@@ -117,7 +115,13 @@ Repères utiles sur les données de retards :
 
 ```text
 .
-├── .streamlit/
+├── app.py
+├── Dockerfile.dashboard
+├── Makefile
+├── MLproject
+├── README.md
+├── requirements.txt
+├── .gitignore
 ├── api/
 │   ├── app.py
 │   ├── Dockerfile
@@ -130,14 +134,7 @@ Repères utiles sur les données de retards :
 │   ├── getaround_analysis_executed.ipynb
 │   └── getaround_analysis_clean.ipynb
 ├── src/
-├── tests/
-├── .gitignore
-├── app.py
-├── Dockerfile.dashboard
-├── Makefile
-├── MLproject
-├── README.md
-└── requirements.txt
+└── tests/
 ```
 
 ## Technologies utilisées
@@ -159,8 +156,8 @@ Repères utiles sur les données de retards :
 ### Installation
 
 ```bash
-git clone URL_DU_REPO
-cd getaround_project
+git clone https://github.com/BiraneWANE/getaround-project_Birane-.git
+cd getaround-project_Birane-
 pip install -r requirements.txt
 ```
 
@@ -204,7 +201,7 @@ make analyze
 - Le fichier d'analyse des retards ne contient pas de variable de chiffre d'affaires ; l'impact commercial est donc approché via le nombre de locations affectées.
 - La recommandation de seuil repose sur les données fournies et ne remplace pas un test en production.
 - Le modèle de prix est adapté à un cas pédagogique et à une démonstration API, mais ne remplace pas un système industriel complet.
-- Le fichier modèle `.joblib` n'est pas versionné sur GitHub en raison de sa taille. Il doit être régénéré localement si nécessaire.
+- Le fichier modèle `.joblib` n'est pas versionné sur GitHub en raison de sa taille. Pour relancer l'API localement après un clone, il faut régénérer le modèle avec `make train` ou `python src/train_model.py`.
 
 ## Pistes d'amélioration
 
