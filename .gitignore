@@ -38,3 +38,9 @@ build/
 
 # Artifacts de modèle trop lourds pour GitHub
 models/*.joblib
+
+# Dossiers internes des outils de développement
+.claude/
+
+# Documents de travail internes (ne pas publier)
+Révision.md

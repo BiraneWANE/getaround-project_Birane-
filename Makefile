@@ -13,5 +13,8 @@ train:
 analyze:
 	python src/analyze_delays.py
 
+assets:
+	python src/build_assets.py
+
 test:
 	pytest -q

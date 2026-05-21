@@ -53,7 +53,7 @@ Déterminer une règle de délai minimal pertinente pour réduire les conflits e
 - une application Streamlit : `app.py` ;
 - une API FastAPI : `api/app.py` ;
 - deux notebooks : une version exécutée et une version clean ;
-- des scripts d'analyse et d'entraînement ;
+- des scripts d'analyse et d'entraînement.
 
 ## Données utilisées
 
@@ -91,16 +91,16 @@ Repères utiles sur les données de retards :
 
 - tableau de bord Streamlit pour la lecture métier ;
 - API documentée automatiquement via `/docs` ;
-- scripts reproductibles ;
+- scripts reproductibles.
 
 ## Résultats clés
 
 | Élément analysé | Résultat principal | Interprétation |
 |---|---|---|
-| Politique recommandée | **120 minutes sur l'ensemble du parc** | Premier seuil franchissant un niveau élevé de protection tout en gardant un impact limité |
+| Politique recommandée | **120 minutes sur l'ensemble du parc** | Premier seuil franchissant 80 % de protection tout en gardant un impact limité |
 | Cas problématiques résolus | **180** cas, soit **82,6 %** | Réduction forte des incidents opérationnels |
 | Locations affectées | **666** locations, soit **3,1 %** du total | Impact commercial mesuré et contenu |
-| Option conservatrice | **120 minutes sur Connect uniquement** | Option moins intrusive mais nettement moins protectrice |
+| Option conservatrice | **120 minutes sur Connect uniquement** | Option moins intrusive mais nettement moins protectrice (27,1 %) |
 | Modèle de prix retenu | **RandomForest** | Meilleur compromis parmi les modèles comparés |
 | Performance du modèle | **MAE 10,75 €/jour**, **RMSE 16,95**, **R² 0,727** | Niveau cohérent pour un cas pédagogique de pricing |
 
@@ -115,27 +115,34 @@ Repères utiles sur les données de retards :
 
 ```text
 .
-├── app.py
-├── Dockerfile.dashboard
-├── Makefile
-├── MLproject
+├── app.py                          ← tableau de bord Streamlit
+├── Dockerfile.dashboard            ← conteneurisation du dashboard (port 8501)
+├── Makefile                        ← raccourcis de commandes
+├── MLproject                       ← configuration MLflow
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
 ├── api/
-│   ├── app.py
-│   ├── Dockerfile
-│   ├── sample_payload_dict.json
-│   └── sample_payload_list.json
-├── assets/
-├── data/
-├── models/
+│   ├── app.py                      ← API FastAPI
+│   ├── Dockerfile                  ← conteneurisation de l'API (port 7860)
+│   ├── sample_payload_dict.json    ← exemple d'entrée format dictionnaire
+│   └── sample_payload_list.json    ← exemple d'entrée format liste
+├── assets/                         ← visuels PNG statiques
+├── data/                           ← données brutes et artefacts d'analyse
+├── models/                         ← métriques et ordre des variables (modèle .joblib non versionné)
 ├── notebooks/
-│   ├── getaround_analysis_executed.ipynb
-│   └── getaround_analysis_clean.ipynb
+│   ├── getaround_analysis_executed.ipynb   ← version avec outputs visibles
+│   └── getaround_analysis_clean.ipynb      ← même structure, sans outputs
 ├── src/
+│   ├── common.py                   ← fonctions partagées
+│   ├── analyze_delays.py           ← produit threshold_simulation.csv et business_summary.json
+│   ├── train_model.py              ← entraîne et sérialise le modèle
+│   └── build_assets.py             ← génère les visuels PNG
 └── tests/
+    └── test_api.py                 ← 4 tests pytest
 ```
+
+**Logique de la structure** : `src/` produit les artefacts dans `data/` et `models/`. `app.py` et `api/app.py` consomment ces artefacts. Tout peut être relancé depuis zéro avec `make analyze && make train`.
 
 ## Technologies utilisées
 
@@ -156,37 +163,54 @@ Repères utiles sur les données de retards :
 ### Installation
 
 ```bash
-git clone https://github.com/BiraneWANE/getaround-project_Birane-.git
-cd getaround-project_Birane-
+git clone <url-du-dépôt>
+cd <nom-du-dépôt>
 pip install -r requirements.txt
+```
+
+### Relancer les artefacts depuis zéro
+
+```bash
+# Analyse des retards → produit data/threshold_simulation.csv et data/business_summary.json
+make analyze
+
+# Entraînement du modèle → produit models/getaround_pricing_pipeline.joblib
+make train
+
+# Visuels statiques → produit les PNG dans assets/
+make assets
 ```
 
 ### Lancer le tableau de bord
 
 ```bash
-streamlit run app.py
+make dashboard
+# → http://localhost:8501
 ```
 
 ### Lancer l'API
 
 ```bash
-uvicorn api.app:app --reload
+make api
+# → http://localhost:8000/docs
 ```
 
 ### Lancer les tests
 
 ```bash
-pytest -q
+make test
 ```
 
-### Commandes utiles via Makefile
+### Toutes les commandes disponibles
 
 ```bash
-make dashboard
-make api
-make test
-make train
-make analyze
+make install    # pip install -r requirements.txt
+make analyze    # python src/analyze_delays.py
+make train      # python src/train_model.py
+make assets     # python src/build_assets.py
+make dashboard  # streamlit run app.py
+make api        # uvicorn api.app:app --reload
+make test       # pytest -q
 ```
 
 ## Notebooks disponibles
@@ -201,7 +225,7 @@ make analyze
 - Le fichier d'analyse des retards ne contient pas de variable de chiffre d'affaires ; l'impact commercial est donc approché via le nombre de locations affectées.
 - La recommandation de seuil repose sur les données fournies et ne remplace pas un test en production.
 - Le modèle de prix est adapté à un cas pédagogique et à une démonstration API, mais ne remplace pas un système industriel complet.
-- Le fichier modèle `.joblib` n'est pas versionné sur GitHub en raison de sa taille. Pour relancer l'API localement après un clone, il faut régénérer le modèle avec `make train` ou `python src/train_model.py`.
+- Le fichier modèle `.joblib` n'est pas versionné sur GitHub en raison de sa taille. Pour relancer l'API localement après un clone, il faut régénérer le modèle avec `make train`.
 
 ## Pistes d'amélioration
 
