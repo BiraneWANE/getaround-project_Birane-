@@ -44,3 +44,4 @@ models/*.joblib
 
 # Documents de travail internes (ne pas publier)
 Révision.md
+pres get around à ne pas pousser sur git/
